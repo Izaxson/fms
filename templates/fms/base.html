@@ -1,0 +1,350 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>MANDERA OOG FMS </title>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Mega Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords" content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="codedthemes" />
+    <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.ico'%}" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <!-- waves.css -->
+    <link rel="stylesheet" href="{% static 'assets/pages/waves/css/waves.min.css'%}" type="text/css" media="all">
+      <!-- Required Fremwork -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap/css/bootstrap.min.css'%}">
+      <!-- waves.css -->
+      <link rel="stylesheet" href="{% static 'assets/pages/waves/css/waves.min.css'%}" type="text/css" media="all">
+      <!-- themify icon -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icon/themify-icons/themify-icons.css'%}">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icon/font-awesome/css/font-awesome.min.css'%}">
+      <!-- scrollbar.css -->
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.mCustomScrollbar.css'%}">
+        <!-- am chart export.css -->
+        <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+      <!-- Style.css -->
+      
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}"></head>
+
+<body>
+
+<div id="pcoded" class="pcoded">
+    <div class="pcoded-overlay-box"></div>
+    <div class="pcoded-container navbar-wrapper" >
+        <nav class="navbar header-navbar pcoded-header">
+            <div class="navbar-wrapper">
+                <div class="navbar-logo">
+                    <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!">
+                        <i class="ti-menu"></i>
+                    </a>
+                    <div class="mobile-search waves-effect waves-light">
+                        <div class="header-search">
+                            <div class="main-search morphsearch-search">
+                                <div class="input-group">
+                                    <span class="input-group-addon search-close"><i class="ti-close"></i></span>
+                                    <input type="text" class="form-control" placeholder="Enter Keyword">
+                                    <span class="input-group-addon search-btn"><i class="ti-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% comment %} <a href="index.html">
+                        <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
+                    </a> {% endcomment %}
+                    <a class="mobile-options waves-effect waves-light">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+            
+                <div class="navbar-container container-fluid">
+                    <ul class="nav-left">
+                        <li>
+                            <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                        </li>
+                        <li class="header-search">
+                            <div class="main-search morphsearch-search">
+                                <div class="input-group">
+                                    <span class="input-group-addon search-close"><i class="ti-close"></i></span>
+                                    <input type="text" class="form-control">
+                                    <span class="input-group-addon search-btn"><i class="ti-search"></i></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+                                <i class="ti-fullscreen"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <ul class="nav-right">
+                        
+                        <li class="">
+                            <a href="#!" class="waves-effect waves-light">
+                               
+                                <span>{{request.user.username}}</span>
+                                <i class="ti-angle-down"></i>
+                            </a>
+                           
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="pcoded-main-container">
+            <div class="pcoded-wrapper">
+                <nav class="pcoded-navbar">
+                    <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                    <div class="pcoded-inner-navbar main-menu">
+                        <div class="">
+                           
+                        
+                            
+                        </div>
+                        <div class="p-15 p-b-0">
+                            {% comment %} <form class="form-material">
+                                <div class="form-group form-primary">
+                                    <input type="text" name="footer-email" class="form-control" required="">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label"><i class="fa fa-search m-r-10"></i>Search Friend</label>
+                                </div>
+                            </form> {% endcomment %}
+                        </div>
+                        {% comment %} <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div> {% endcomment %}
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li class="">
+                                <a href="{% url 'dashboard' %}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            {% comment %} <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                                    <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Components</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="accordion.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Accordion</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="breadcrumb.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Breadcrumbs</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="button.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Button</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="tabs.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Tabs</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="color.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Color</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="label-badge.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Label Badge</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="tooltip.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Tooltip</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="typography.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Typography</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="notification.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Notification</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="icon-themify.html" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Themify</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                            
+                                </ul>
+                            </li> {% endcomment %}
+                        </ul>
+                        <div class="pcoded-navigation-label" data-i18n="nav.category.forms">FILES </div>
+                        {% comment %} <ul class="pcoded-item pcoded-left-item">
+                            <li>
+                                <a href="form-elements-component.html" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-files"></i><b>FC</b></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">INCOMIMG</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="bs-basic-table.html" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-receipt"></i><b>FC</b></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.form-components.main">OUTGOING</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                    
+                        </ul> {% endcomment %}
+                    
+                        
+                        <ul class="pcoded-item pcoded-left-item">
+                          
+                            <li class="pcoded-hasmenu active pcoded-trigger">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-layout-tab"></i></span>
+                                    <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">INCOMING </span>
+                                    
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="{% url 'received' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-eye"></i></span>
+                                            
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert"><i class="ti-eye">  </i>View File</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="{% url 'addreceived' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-import"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs"><i class="ti-export">  </i> Upload</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
+                    
+                        </ul>
+                        <ul class="pcoded-item pcoded-left-item">
+                          
+                            <li class="pcoded-hasmenu active pcoded-trigger">
+                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-layout-tab"></i></span>
+                                    <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">OUTGOING </span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class=" ">
+                                        <a href="{% url 'sent' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-eye"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert"><i class="ti-eye">  </i>View File</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="{% url 'addsent' %}" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-import"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs"><i class="ti-export">  </i>Upload</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
+                    
+                        </ul>
+                      
+                </nav>
+                <div class="pcoded-content">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                        {% elif message.tags == 'info' %}
+                        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                        {% elif message.tags == 'warning' %}
+                        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                        {% elif message.tags == 'error' %}
+                        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                   {% block content%}
+                    
+                   {% endblock%}
+                </div>
+                <div id="styleSelector">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Required Jquery -->
+<script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
+<script type="text/javascript" src="assets/js/popper.js/popper.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="assets/pages/widget/excanvas.js "></script>
+<!-- waves js -->
+<script src="assets/pages/waves/js/waves.min.js"></script>
+<!-- jquery slimscroll js -->
+<script type="text/javascript" src="assets/js/jquery-slimscroll/jquery.slimscroll.js "></script>
+<!-- modernizr js -->
+<script type="text/javascript" src="assets/js/modernizr/modernizr.js "></script>
+<!-- slimscroll js -->
+<script type="text/javascript" src="assets/js/SmoothScroll.js"></script>
+<script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
+<!-- Chart js -->
+<script type="text/javascript" src="assets/js/chart.js/Chart.js"></script>
+<!-- amchart js -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="assets/pages/widget/amchart/gauge.js"></script>
+<script src="assets/pages/widget/amchart/serial.js"></script>
+<script src="assets/pages/widget/amchart/light.js"></script>
+<script src="assets/pages/widget/amchart/pie.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<!-- menu js -->
+<script src="assets/js/pcoded.min.js"></script>
+<script src="assets/js/vertical-layout.min.js "></script>
+<!-- custom js -->
+<script type="text/javascript" src="assets/pages/dashboard/custom-dashboard.js"></script>
+<script type="text/javascript" src="{% static 'assets/js/script.js'%} "></script>
+
+</body>
+
+</html>

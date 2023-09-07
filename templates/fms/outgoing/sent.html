@@ -1,0 +1,195 @@
+{% extends 'fms/base2.html' %}
+{% load static%}
+{% block content %}
+
+
+<div class="content-wrapper">
+    <div class="page-header">
+     
+      
+      {% comment %} <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Sample pages</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Orders</li>
+        </ol>
+      </nav> {% endcomment %}
+    </div>
+   
+    
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
+                </div>
+              </div>
+            </div>
+            <br><br>
+            {% comment %} <div class="row grid-margin">
+              <div class="col-12">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+                </div>
+              </div>
+            </div> {% endcomment %}
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table id="order-listing" class="table">
+                    <thead>
+                      <tr class="bg-success text-white">
+                        
+                        
+                          <th>subject</th>
+                          <th>File Name</th>
+                          <th>Date Sent</th>
+                          <th>Office From</th>
+                          <th>Date Sent</th>
+                         
+                         
+                          <th>View</th>
+                          <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for sent in object_list%}
+                      <tr>
+                        
+                          <td>{{sent.subject}}</td>
+                          <td>{{sent.file_name}}</td>
+                          <td>{{sent.date_sent}}</td>
+                          <td>{{sent.office_from}}</td>
+                          <td>{{sent.date_created}}</td>
+                          
+                          <td>
+                            <i class="fa fa-eye text-primary"></i>View
+                          </td>
+                          <td>
+                          <a href="{% url 'download_file' sent.id %}"> <button class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
+                            </td>
+                            <td></td>
+                          
+                          
+                       </tr>
+                     
+                      {% endfor%}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     
+   
+  </div>
+
+{% comment %} <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!-- Basic table card start -->
+                <div class="card">
+              
+                    <div class="card-header">
+                       
+                        <a href="{% url 'addsent' %}"> <button class="btn waves-effect waves-light btn-success"><i class="ti-plus"></i>Add New</button></a>
+                        <span></span>
+                        <div class="card-header-right">
+                            <ul class="list-unstyled card-option">
+                                <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                <li><i class="fa fa-window-maximize full-card"></i></li>
+                                <li><i class="fa fa-minus minimize-card"></i></li>
+                                <li><i class="fa fa-refresh reload-card"></i></li>
+                                <li><i class="fa fa-trash close-card"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% if messages %}
+                    {% for message in messages %}
+                       
+                       
+                        <button class="btn btn-success waves-effect" data-type="inverse"
+                         data-animation-in="animated fadeInUp" data-animation-out="animated
+                          fadeOutUp">{{message}}</button>
+                        
+                    {% endfor %}
+            {% endif %}
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+
+                                    <tr>
+                                       
+                                        <th>No</th>
+                                        <th>subject </th>
+                                        <th>file_name</th>
+                                      
+                                        <th>Date Sent</th>
+                                        <th 'colspan=3'>Action</th>
+                                    </tr>
+
+
+                                </thead>
+                                <tbody>
+                                    {% for sent in object_list %}
+                                    <tr>
+                                        
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>
+                                        <td>{{sent.subject}}</td>
+                                        <td>{{sent.file_name}}</td>
+                                        <td>{{sent.date_sent}}</td>
+                                       
+
+                                        <td>
+                                            <button class="btn waves-effect waves-light btn-info"><i class="ti-eye"></i>{{received.file.url}}</button>
+                                            <a href="{% url 'download_file' sent.id %}"> <button class="btn waves-effect waves-light btn-success"><i class="ti-import"></i>Download</button></a>
+                                            <button class="btn waves-effect waves-light btn-danger"><i class="ti-trash"></i></i>Delete</button>
+                                        </td>
+
+                                    </tr>
+                                    {% empty%}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Page-body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->
+
+    <div id="styleSelector">
+
+    </div>
+</div> {% endcomment %}
+
+
+
+
+
+<!-- Warning Section Starts -->
+<!-- Older IE warning message -->
+
+<script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
+<script src="{% static 'vendors/js/vendor.bundle.addons.js'%}"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js'%}"></script>
+<script src="{% static 'js/hoverable-collapse.js'%}"></script>
+<script src="{% static 'js/misc.js'%}"></script>
+<script src="{% static 'js/settings.js'%}"></script>
+<script src="{% static 'js/todolist.js'%}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{% static 'js/data-table.js'%}"></script>
+
+{% endblock %}

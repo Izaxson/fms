@@ -1,0 +1,146 @@
+{% extends 'fms/base2.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid page-body-wrapper">
+  
+    <div class="main-panel">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
+          </div>
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title">
+            Dashboard
+          </h3>
+        </div>
+        
+        <div class="row grid-margin">
+          <div class="col-12">
+            <div class="card card-statistics">
+              <div class="card-body">
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <div class="statistics-item">
+                      <p>
+                        <i class="icon-sm fa fa-user mr-2"></i>
+                        Received
+                      </p>
+                      <h2>{{received_count}}</h2>
+                      <label class="badge badge-outline-success badge-pill">{{percent_received}}% Incoming </label>
+                    </div>
+                    <div class="statistics-item">
+                      <p>
+                        <i class="icon-sm fas fa-hourglass-half mr-2"></i>
+                       Sent
+                      </p>
+                      <h2>{{sent_count}}</h2>
+                      <label class="badge badge-outline-danger badge-pill">{{percent_sent}}% Outgoing</label>
+                    </div>
+                    <div class="statistics-item">
+                      <p>
+                        <i class="icon-sm fas fa-envelope mr-2"></i>
+                        Total
+                      </p>
+                      <h2>{{total_count}}</h2>
+                      <label class="badge badge-outline-success badge-pill">All Files</label>
+                    </div>
+                    {% comment %} <div class="statistics-item">
+                      <p>
+                        <i class="icon-sm fas fa-check-circle mr-2"></i>
+                        Update
+                      </p>
+                      <h2></h2>
+                      <label class="badge badge-outline-success badge-pill">57% increase</label>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="statistics-item">
+                      <p>
+                        <i class="icon-sm fas fa-chart-line mr-2"></i>
+                        Sales
+                      </p>
+                      <h2>9000</h2>
+                      <label class="badge badge-outline-success badge-pill">10% increase</label>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="statistics-item">
+                      <p>
+                        <i class="icon-sm fas fa-circle-notch mr-2"></i>
+                        Pending
+                      </p>
+                      <h2>7500</h2>
+                      <label class="badge badge-outline-danger badge-pill">16% decrease</label>
+                    </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+         
+          <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">
+                  <i class="fas fa-calendar-alt"></i>
+                  Calendar
+                </h4>
+                <div id="inline-datepicker-example" class="datepicker"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <i class="fas fa-file"></i>
+                    Files
+                  </h4>
+                  <canvas id="orders-chart"></canvas>
+                  <div id="orders-chart-legend" class="orders-chart-legend"></div>                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <i class="fas fa-download"></i>
+                    Files
+                  </h4>
+                  <h2 class="mb-5">{{total_count}} <span class="text-muted h4 font-weight-normal">Files Downloadable</span></h2>
+                  <canvas id="sales-chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     
+       
+        
+        
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+     
+    </div>
+    <script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
+    <script src="{% static 'vendors/js/vendor.bundle.addons.js'%}"></script>
+    <script src="{% static 'js/dashboard.js'%}"></script>
+    <script src="{% static 'js/off-canvas.js'%}"></script>
+    <script src="{% static 'js/hoverable-collapse.js'%}"></script>
+    <script src="{% static 'js/misc.js'%}"></script>
+    <script src="{% static 'js/settings.js'%}"></script>
+    <script src="{% static 'js/todolist.js'%}"></script>
+    <!-- main-panel ends -->
+  </div>
+
+  {% endblock%}
