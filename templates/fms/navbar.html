@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
       {% comment %} <a class="navbar-brand brand-logo" href="{% static 'index-2.html'%}"><img src="{% static 'images/logo.svg'%}" alt="logo"/></a>
@@ -22,13 +24,13 @@
         </li>
       </ul>
       <ul class="navbar-nav navbar-nav-right">
-        <li class="nav-item d-none d-lg-flex">
+        {% comment %} <li class="nav-item d-none d-lg-flex">
           <a class="nav-link" href="#">
             <span class="btn btn-primary">+ Create new</span>
           </a>
-        </li>
+        </li> {% endcomment %}
         <li class="nav-item dropdown d-none d-lg-flex">
-          <div class="nav-link">
+          {% comment %} <div class="nav-link">
             <span class="dropdown-toggle btn btn-outline-dark" id="languageDropdown" data-toggle="dropdown">English</span>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="languageDropdown">
               <a class="dropdown-item font-weight-medium" href="#">
@@ -47,7 +49,7 @@
                 Arabic
               </a>
             </div>
-          </div>
+          </div> {% endcomment %}
         </li>
         {% comment %} <li class="nav-item dropdown">
           <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">

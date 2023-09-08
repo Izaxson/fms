@@ -44,10 +44,10 @@ class DashboardView(TemplateView):
             context['percent_sent'] = percent_sent
         except Exception as e:
             # Handle any exceptions gracefully
-            context['received_count'] = "Error fetching data from the database."
-            context['sent_count'] = "Error fetching data from the database."
-            context['total_count'] = "Error calculating total count."
-            context['users_count'] = "Error calculating user count."
+            context['received_count'] = "no data."
+            context['sent_count'] = "no data."
+            context['total_count'] = "no data."
+            context['users_count'] = "no data."
         
         return context
 
