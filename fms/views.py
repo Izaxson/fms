@@ -102,9 +102,8 @@ class SentAddView(FormView):
         messages.warning(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)   
 
-class DownloadFileView(View):
+class ReceivedDownloadFileView(View):
     def get(self, request, file_id):
-        uploaded_file = Sent.objects.get(pk=file_id)
         uploaded_file = Received.objects.get(pk=file_id)
         response = HttpResponse(
             uploaded_file.file, content_type='application/force-download'
@@ -112,7 +111,15 @@ class DownloadFileView(View):
         response['Content-Disposition'] = f'attachment; filename="{uploaded_file.file.name}"'
         return response
     
-
+class SentDownloadFileView(View):
+    def get(self, request, file_id):
+        # uploaded_file = Sent.objects.get(pk=file_id)
+        uploaded_file = Sent.objects.get(pk=file_id)
+        response = HttpResponse(
+            uploaded_file.file, content_type='application/force-download'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{uploaded_file.file.name}"'
+        return response
 
 
 
@@ -168,18 +175,3 @@ class SearchResultsView(ListView):
             return queryset
         return Received.objects.none()
 
-# class PDFView(View):
-#     def get(self, request, filename):
-#         # Build the full file path to the PDF document
-#         filepath = os.path.join(settings.MEDIA_ROOT, "files", filename)
-
-#         try:
-#             with open(filepath, 'rb') as pdf:
-#                 response = HttpResponse(pdf.read(), content_type='application/pdf')
-#                 response['Content-Disposition'] = 'inline;filename=' + filename
-#                 return response
-#         except FileNotFoundError:
-#             raise Http404  # Raise a 404 error for file not found
-
-# # Assuming you have a URL pattern like this in your Django app's urls.py:
-# # path('view-pdf/<str:filename>/', PDFView.as_view(), name='pdf'),

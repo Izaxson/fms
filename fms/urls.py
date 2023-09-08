@@ -15,5 +15,6 @@ urlpatterns = [
    #Sent
    path('sent',views.SentListView.as_view(),name='sent'),
    path('addsent',views.SentAddView.as_view(),name='addsent'),
-   path('download/<int:file_id>/', views.DownloadFileView.as_view(), name='download_file'),
+   path('download/<int:file_id>/', views.SentDownloadFileView.as_view(), name='sent_download_file'),
+   path('received-download/<int:file_id>/', views.ReceivedDownloadFileView.as_view(), name='received-download'),
 ]
