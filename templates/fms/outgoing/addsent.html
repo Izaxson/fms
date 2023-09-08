@@ -15,7 +15,8 @@
         <p class="card-description">
           
         </p>
-        <form class="forms-sample">
+        <form method="POST" enctype="multipart/form-data" class="forms-sample">
+          {% csrf_token %}
           <div class="form-group">
            
             {% render_field form.subject type="text" class="form-control" placeholder="Subject"  %}
@@ -25,38 +26,31 @@
             
             {% render_field form.file_name type="text" class="form-control"  placeholder="File name" %}
           </div>
-          {% comment %} <div class="form-group">
-            <label for="exampleInputEmail3">Entity</label>
+          <div class="form-group">
+            <label for="exampleInputEmail3">Sent To</label>
             
-            {% render_field form.entity type="text" class="form-control"   placeholder="" %}
-          </div> {% endcomment %}
+            {% render_field form.sent_to type="text" class="form-control"   placeholder="" %}
+          </div> 
 
           <div class="form-group">
             <label for="exampleInputEmail3">Institution</label>
             
             {% render_field form.institution type="text" class="form-control"   placeholder="" %}
           </div>
-          {% comment %} <div class="form-group">
-            <label for="exampleInputEmail3">Priority</label>
+           <div class="form-group">
+            <label for="exampleInputEmail3">Date Sent</label>
             
-            {% render_field form.priority type="date" class="form-control"   placeholder="Date Sent" %}
-          </div> {% endcomment %}
-          {% comment %} <div class="form-group">
-            <label for="exampleInputEmail3">Date Received</label>
+            {% render_field form.date_sent type="date" class="form-control"   placeholder="Date Sent" %}
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail3">Office From</label>
             
-            {% render_field form.date_received type="date"  class="form-control"   placeholder="Date" %}
-          </div> {% endcomment %}
-          {% comment %} <div class="form-group">
-            <label for="exampleInputEmail3">Office To</label>
-            
-            {% render_field form.office_to type="text" class="form-control"   placeholder="" %}
-          </div> {% endcomment %}
+            {% render_field form.office_from type="date"  class="form-control"   placeholder="Date" %}
+          </div> 
 
-          {% comment %} <div class="form-group">
-            <label for="exampleInputEmail3">County </label>
-            
-            {% render_field form.county type="text" class="form-control"   placeholder="If applicable" %}
-          </div> {% endcomment %}
+          
+
+          
          
           <div class="form-group">
             <label>File upload</label>
@@ -64,7 +58,7 @@
             <div class="input-group col-xs-12">
               {% render_field form.file type="file" class="form-control"  %}
               <span class="input-group-append">
-                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                <button class="file-upload-browse btn btn-success" disabled type="button">Upload</button>
               </span>
             </div>
           </div>
@@ -73,8 +67,9 @@
             <label for="exampleTextarea1">Remarks</label>
             {% render_field form.remarks type="textarea" class="form-control"   placeholder="Remarks" %}
           </div>
-          {% comment %} <button btn-btn primary type=submit>Upload</button> {% endcomment %}
-          <button btn btn-success type="submit" class="btn btn-primary mr-2">Submit</button>
+           
+          <button  type="submit" class="btn btn-success mr-2">Submit</button> 
+         
           <button class="btn btn-light">Cancel</button>
         </form>
       </div>

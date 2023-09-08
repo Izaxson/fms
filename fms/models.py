@@ -80,6 +80,7 @@ class Sent(models.Model):
     institution = models.CharField(max_length=100)
     date_sent = models.DateField()
     office_from= models.CharField(choices=OFFICE_FROM, max_length=200)
+    # date_created = models.DateTimeField(auto_now_add=True,blank=True,null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='files/', validators=[FileExtensionValidator(['pdf', 'docx', 'doc', 'xls', 'xlsx', 'ppt', 'pptx'])])
     remarks = models.TextField(max_length=100,null=True,blank=True)

@@ -2,18 +2,33 @@
 {% load static%}
 {% block content %}
 
+{% if messages %}
+<div class="alert alert-success" role="alert">
 
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+   
+</div>
+{% endif %}
 <div class="content-wrapper">
     <div class="page-header">
      
-      
-      {% comment %} <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Sample pages</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Orders</li>
-        </ol>
-      </nav> {% endcomment %}
-    </div>
+{% comment %}       
+      <div class="card-body">
+
+        <div class="card-header" align='right'>
+          <a href="{% url 'addsent' %}" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i>
+            Add New </a>
+        </div>
+        <div class="card-body">
+          <h4>SEARCH/ FILTER  </h4>
+          <form method="GET">
+            {{ filter.form}}
+            <button type="submit" name='q' class="btn btn btn-success">Search </button>
+          </form>
+        </di
+    </div> {% endcomment %}
    
     
         <div class="card">
@@ -191,5 +206,12 @@
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="{% static 'js/data-table.js'%}"></script>
+
+
+  
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/toastDemo.js'%}"></script>
+  <script src="{% static 'js/desktop-notification.js'%}"></script>
 
 {% endblock %}

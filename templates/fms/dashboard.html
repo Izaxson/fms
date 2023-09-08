@@ -2,7 +2,16 @@
 {% load static %}
 {% block content %}
 
-<div class="container-fluid page-body-wrapper">
+{% if messages %}
+<div class="alert alert-success" role="alert">
+
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+   
+</div>
+{% endif %}
+<div class="container-fluid page-body-wrapper" "col-12">
   
     <div class="main-panel">
       <div class="row">
@@ -43,7 +52,7 @@
                     <div class="statistics-item">
                       <p>
                         <i class="icon-sm fas fa-envelope mr-2"></i>
-                        Total
+                        Total Uploads
                       </p>
                       <h2>{{total_count}}</h2>
                       <label class="badge badge-outline-success badge-pill">All Files</label>
@@ -90,8 +99,8 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
+         
+            <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">
@@ -103,7 +112,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">
@@ -115,7 +124,7 @@
                 </div>
               </div>
             </div>
-          </div>
+         
         </div>
      
        
@@ -144,3 +153,4 @@
   </div>
 
   {% endblock%}
+   </div>

@@ -15,7 +15,8 @@
         <p class="card-description">
           
         </p>
-        <form class="forms-sample">
+        <form method="POST" enctype="multipart/form-data" class="forms-sample">
+          {% csrf_token %}
           <div class="form-group">
            
             {% render_field form.subject type="text" class="form-control" placeholder="Subject"  %}
@@ -41,7 +42,7 @@
             
             {% render_field form.priority type="date" class="form-control"   placeholder="Date Sent" %}
           </div>
-          <div class="form-group">
+          <div class="form-group" col-sm=5>
             <label for="exampleInputEmail3">Date Received</label>
             
             {% render_field form.date_received type="date"  class="form-control"   placeholder="Date" %}
@@ -64,7 +65,7 @@
             <div class="input-group col-xs-12">
               {% render_field form.file type="file" class="form-control"  %}
               <span class="input-group-append">
-                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                <button class="file-upload-browse btn btn-success" disabled type="button">Upload</button>
               </span>
             </div>
           </div>
@@ -74,8 +75,9 @@
             {% render_field form.remarks type="textarea" class="form-control"   placeholder="Remarks" %}
           </div>
           {% comment %} <button btn-btn primary type=submit>Upload</button> {% endcomment %}
-          <button btn btn-success type="submit" class="btn btn-primary mr-2">Submit</button>
-          <button class="btn btn-light">Cancel</button>
+          
+          <button btn btn-success type="submit"class="btn btn-success d-none d-lg-flex">Submit</button> 
+          
         </form>
       </div>
     </div>

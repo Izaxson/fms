@@ -14,6 +14,7 @@ from core import settings
 from fms.forms import ReceivedForm, SentForm
 from fms.models import Received, Sent
 import mimetypes
+
 # Create your views here.
 
 from django.views.generic import TemplateView
@@ -33,7 +34,7 @@ class DashboardView(TemplateView):
             users_count = User.objects.all().count()
             # Calculate the total count
             total_count = received_count + sent_count
-            percent_received=(math.ceil( (received_count/total_count)*100))
+            percent_received=(math.floor( (received_count/total_count)*100))
             percent_sent=(math.floor( (sent_count/total_count)*100))
             context['received_count'] = received_count
             context['users_count'] = users_count
@@ -70,9 +71,9 @@ class ReceivedAddView(FormView):
 
     def form_valid(self, form):
         # profile = self.request.user.profile  #  'Profile' model related to the user
-        received = form.save(commit=False)
+        # received = form.save(commit=False)
         # received.profile = profile
-        received.save()
+        form.save()
 
         messages.success(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)
@@ -95,10 +96,10 @@ class SentAddView(FormView):
     def form_valid(self, form):
         # profile = self.request.user.profile  #  'Profile' model related to the user
         form.save()
-        # sent.profile = profile
-        # sent.save()
+        # form.profile = profile
+        # form.save()
 
-        messages.success(self.request, 'Your File has been saved. Thank you!')
+        messages.warning(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)   
 
 class DownloadFileView(View):
