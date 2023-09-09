@@ -2,34 +2,11 @@
 {% load static%}
 {% block content %}
 
-{% if messages %}
-<div class="alert alert-success" role="alert">
 
-  {% for message in messages %}
-  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-    {% endfor %}
-   
-</div>
-{% endif %}
-<div class="content-wrapper">
+
     <div class="page-header">
      
-{% comment %}       
-      <div class="card-body">
 
-        <div class="card-header" align='right'>
-          <a href="{% url 'addsent' %}" class="btn btn-icon icon-left btn-success"><i class="fas fa-check"></i>
-            Add New </a>
-        </div>
-        <div class="card-body">
-          <h4>SEARCH/ FILTER  </h4>
-          <form method="GET">
-            {{ filter.form}}
-            <button type="submit" name='q' class="btn btn btn-success">Search </button>
-          </form>
-        </di
-    </div> {% endcomment %}
-   
     
         <div class="card">
           <div class="card-body">
@@ -48,6 +25,15 @@
                 </div>
               </div>
             </div> {% endcomment %}
+            {% if messages %}
+              <div class="alert alert-success" role="alert">
+
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                  {% endfor %}
+                
+              </div>
+              {% endif %}
             <div class="row">
               <div class="col-12">
                 <div class="table-responsive">
@@ -55,39 +41,56 @@
                     <thead>
                       <tr class="bg-success text-white">
                         
-                        
+                        <th>#</th>
                           <th>subject</th>
                           <th>File Name</th>
                           <th>Date Sent</th>
-                          <th>Office From</th>
-                          <th>Date Sent</th>
+                         
+                          <th>Edit</th>
                          
                          
-                          <th>View</th>
-                          <th>Actions</th>
+                          <th>View File</th>
+                          <th>Download</th>
+                          <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for sent in object_list%}
                       <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{sent.subject}}</td>
+      
+                        <td>{{sent.file_name}}</td>
+                        <td>{{sent.date_sent|date:"d-m-Y"}}</td>
                         
-                          <td>{{sent.subject}}</td>
-                          <td>{{sent.file_name}}</td>
-                          <td>{{sent.date_sent}}</td>
-                          <td>{{sent.office_from}}</td>
-                          <td>{{sent.date_created}}</td>
+                        <td>
+                          <a href="{% url 'edit-sent' sent.id %}"><button class="btn btn-light"><i class="fa fa-edit text-primary"></i>
+                          </button>
+                        </td>
+                       
+      
+                        <td>
+                          <button class="btn btn-light"><a href=""><i class="fa fa-eye text-primary"></i>
+                          </button>
+                        </td>
                           
-                          <td>
+      
+                        <td >
+                          {% comment %} <button class="btn btn-light">
                             <i class="fa fa-eye text-primary"></i>View
-                          </td>
-                          <td>
-                          <a href="{% url 'sent_download_file' sent.id %}"> <button class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
-                            </td>
-                            <td></td>
-                          
-                          
-                       </tr>
-                     
+                          </button> {% endcomment %}
+      
+                          <a href="{% url 'sent_download_file' sent.id %}"> <button
+                              class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
+      
+                        </td>
+
+                        <td>
+                          <a href="{% url 'delete-sent' sent.id %}"><button class="btn btn-light"><i class="fa fa-trash text-danger"></i>
+                          </button>
+                        </td>
+                      </tr>
+      
                       {% endfor%}
                     </tbody>
                   </table>
@@ -98,7 +101,7 @@
         </div>
      
    
-  </div>
+
 
 {% comment %} <div class="pcoded-inner-content">
     <!-- Main-body start -->

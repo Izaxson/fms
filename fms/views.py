@@ -7,11 +7,11 @@ from django.urls import reverse_lazy
 from django.views import View
 import os
 from django.conf import settings
-from django.views.generic import CreateView,ListView,DetailView,FormView
+from django.views.generic import CreateView,ListView,DetailView,FormView,UpdateView,DeleteView
 from django.contrib import messages
 from django.contrib.auth.models import User
 from core import settings
-from fms.forms import ReceivedForm, SentForm
+from fms.forms import ReceivedForm, SentForm,UpdateReceivedForm,UpdateSentForm
 from fms.models import Received, Sent
 import mimetypes
 
@@ -21,6 +21,14 @@ from django.views.generic import TemplateView
 
 from django.views.generic import TemplateView
 from .models import Received, Sent  # Import the Received and Sent models
+
+
+class LoginView(TemplateView):
+    template_name = 'fms/auth/login.html'
+class PasswordResetView(TemplateView):
+    template_name = 'fms/auth/password-reset.html'
+
+
 
 class DashboardView(TemplateView):
     template_name = 'fms/dashboard.html'
@@ -78,6 +86,32 @@ class ReceivedAddView(FormView):
         messages.success(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)
     
+
+class UpdateReceived(UpdateView):
+    template_name = 'fms/incoming/editreceived.html'
+    form_class = UpdateReceivedForm
+    success_url = reverse_lazy('received')
+
+    def form_valid(self, form):
+        form.save()
+
+        messages.success(self.request, 'Your File details has been updated. Thank you!')
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        file_id = self.kwargs.get('file_id')
+        return Received.objects.get(pk=file_id) 
+
+class DeleteReceived(DeleteView):
+    model = Received
+    template_name = 'fms/incoming/delete.html'
+    success_url = reverse_lazy('received')  # Redirect to the success URL after deletion
+
+    def get_object(self, queryset=None):
+        file_id = self.kwargs.get('file_id')
+        return get_object_or_404(Received, id=file_id)
+
+
 class SentListView(ListView):
     template_name = 'fms/outgoing/sent.html'
     model = Sent
@@ -87,7 +121,8 @@ class SentListView(ListView):
     def get_queryset(self):
         # Return a queryset of all Expense objects of current logged in user
          return Sent.objects.all()  
-    
+
+
 class SentAddView(FormView):
     template_name = 'fms/outgoing/addsent.html'
     form_class=SentForm
@@ -99,8 +134,39 @@ class SentAddView(FormView):
         # form.profile = profile
         # form.save()
 
-        messages.warning(self.request, 'Your File has been saved. Thank you!')
+        messages.success(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)   
+    
+
+class UpdateSent(UpdateView):
+    template_name = 'fms/outgoing/editsent.html'
+    form_class = UpdateSentForm
+    success_url = reverse_lazy('sent')
+
+    def form_valid(self, form):
+        form.save()
+
+        messages.success(self.request, 'Your File details has been updated. Thank you!')
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        file_id = self.kwargs.get('file_id')
+        return Sent.objects.get(pk=file_id) 
+
+class DeleteSent(DeleteView):
+    model = Sent
+    template_name = 'fms/outgoing/delete.html'
+    success_url = reverse_lazy('sent')  # Redirect to the success URL after deletion
+
+    def get_object(self, queryset=None):
+        file_id = self.kwargs.get('file_id')
+        return get_object_or_404(Sent, id=file_id)
+    
+
+
+
+
+
 
 class ReceivedDownloadFileView(View):
     def get(self, request, file_id):
@@ -113,12 +179,16 @@ class ReceivedDownloadFileView(View):
     
 class SentDownloadFileView(View):
     def get(self, request, file_id):
-        # uploaded_file = Sent.objects.get(pk=file_id)
-        uploaded_file = Sent.objects.get(pk=file_id)
+        try:
+            uploaded_file = Sent.objects.get(pk=file_id)
+        except Sent.DoesNotExist:
+            return HttpResponse("File not found", status=404)
+
         response = HttpResponse(
-            uploaded_file.file, content_type='application/force-download'
+            uploaded_file.file.read(), content_type='application/force-download'
         )
         response['Content-Disposition'] = f'attachment; filename="{uploaded_file.file.name}"'
+
         return response
 
 
@@ -136,7 +206,7 @@ def pdf_view(request, filename):
         return render(request, '404.html')  # Handle file not found gracefully
 from django.views.generic import ListView
 from .models import Received
-from .forms import ReceivedForm
+from .forms import ReceivedForm, UpdateReceivedForm, UpdateSentForm
 
 class SearchResultsView(ListView):
     model = Received
@@ -175,3 +245,15 @@ class SearchResultsView(ListView):
             return queryset
         return Received.objects.none()
 
+class SentFileView(View):
+    def get(self, request, sent_id):
+        try:
+            uploaded_file = Sent.objects.get(pk=sent_id)
+        except Sent.DoesNotExist:
+            return HttpResponse("File not found", status=404)
+
+        response = HttpResponse(
+            uploaded_file.sent.read(), content_type='application/force-download'
+        )
+        response['Content-Disposition'] = f'inline; filename="{uploaded_file.sent.name}"'
+        return response

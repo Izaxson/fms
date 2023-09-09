@@ -47,9 +47,9 @@
                   <th>subject</th>
                   <th>institution</th>
                   <th>Date Received</th>
-                  <th>Date Created</th>
+                  
                   <th>Office To</th>
-                  <th>Date Created</th>
+                  <th>Edit/Delete</th>
                   <th>View</th>
                   <th>Actions</th>
                 </tr>
@@ -61,21 +61,22 @@
                   <td>{{received.subject}}</td>
 
                   <td>{{received.institution}}</td>
-                  <td>{{received.date_received}}</td>
-                  <td>{{received.institution}}</td>
+                  <td>{{received.date_received|date:"d-m-Y"}}</td>
+                  
                   <td>{{received.office_to}}</td>
-                  <td>{{received.date_created}}</td>
-                  <td><button class="btn btn-light">
-                      <i class="fa fa-eye text-primary"></i>View
-                    </button></td>
+                  <td>
+                    <a href="{% url 'edit-received' received.id %}"><button class="btn btn-light"><i class="fa fa-edit text-primary"></i>
+                    </button>
+                  </td>
 
+                  <td>
+                    <a href="{% url 'view-file' received.id %}">  <button class="btn btn-light"><i class="fa fa-eye text-primary"></i>
+                    </button>
+                  </td>
+                    
 
                   <td class="text-right">
-                    {% comment %} <button class="btn btn-light">
-                      <i class="fa fa-eye text-primary"></i>View
-                    </button> {% endcomment %}
-
-                    <a href="{% url 'received-download' received.id %}"> <button
+                        <a href="{% url 'received-download' received.id %}"> <button
                         class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
 
                   </td>

@@ -49,7 +49,7 @@ class Received(models.Model):
     file = models.FileField(upload_to='files/', validators=[FileExtensionValidator(['pdf', 'docx', 'doc', 'xls', 'xlsx', 'ppt', 'pptx'])])
     remarks = models.TextField(max_length=100,null=True,blank=True)
     class  Meta:
-        ordering=['-id']
+        ordering=['-date_received']
         verbose_name = 'Received'
         verbose_name_plural = 'Received'
 
@@ -86,6 +86,7 @@ class Sent(models.Model):
     remarks = models.TextField(max_length=100,null=True,blank=True)
 
     class Meta:
+        ordering=['-date_sent']
         verbose_name = 'Sent'
         verbose_name_plural = 'Sent'
         
