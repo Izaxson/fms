@@ -34,6 +34,9 @@
                 
               </div>
               {% endif %}
+              <a class="nav-link" "float-right" href="{% url 'addsent' %}">
+              <span class="btn btn-success"> Upload New </span>
+            </a>
             <div class="row">
               <div class="col-12">
                 <div class="table-responsive">
@@ -76,18 +79,15 @@
                           
       
                         <td >
-                          {% comment %} <button class="btn btn-light">
-                            <i class="fa fa-eye text-primary"></i>View
-                          </button> {% endcomment %}
-      
+                            
                           <a href="{% url 'sent_download_file' sent.id %}"> <button
                               class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
       
                         </td>
 
                         <td>
-                          <a href="{% url 'delete-sent' sent.id %}"><button class="btn btn-light"><i class="fa fa-trash text-danger"></i>
-                          </button>
+                          
+                          <a href="{% url 'delete-sent' sent.id %}"> <button class="btn btn-outline-light" onclick="showSwal('warning-message-and-cancel')"><i class="fa fa-trash text-danger"></button></a>
                         </td>
                       </tr>
       
@@ -216,5 +216,14 @@
   <!-- Custom js for this page-->
   <script src="{% static 'js/toastDemo.js'%}"></script>
   <script src="{% static 'js/desktop-notification.js'%}"></script>
+
+
+  <!-- endinject -->
+  <!-- inject:js -->
+
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/alerts.js'%}"></script>
+  <script src="{% static 'js/avgrund.js'%}"></script>
 
 {% endblock %}

@@ -11007,7 +11007,7 @@ fieldset:disabled a {
 }
 
 .btn-primary, .navbar.default-layout-navbar.navbar-primary .navbar-menu-wrapper .navbar-nav .nav-item .nav-link .btn-primary, .wizard > .actions a {
-  color: #fff;
+  color: #04B76B;
   background-color: #392C70;
   border-color: #392C70;
 }
@@ -29041,7 +29041,7 @@ div.tagsinput span.tag a {
 /* === Landing screens === */
 /* Auth */
 .auth .login-half-bg {
-  background: url("../images/auth/login-bg.jpg");
+  background: url("../images/login-bg.png");
   background-size: cover;
 }
 

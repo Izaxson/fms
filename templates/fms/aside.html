@@ -1,57 +1,80 @@
 {% load static %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
-      <li class="nav-item nav-profile">
-        <div class="nav-link">
-          <div class="profile-image">
-      <img src="{% static 'images/faces/face5.jpg' %}" alt="image" /> 
-          </div>
-          <div class="profile-name">
-            <p class="name">
-              Welcome {{request.user.username}}
-            </p>
-            <p class="designation">
-              
-            </p>
-          </div>
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <div class="nav-link">
+        <div class="profile-image">
+          <img src="{% static 'images/faces/face5.jpg'%}" alt="image"/>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'dashboard' %}">
-          <i class="fa fa-home menu-icon"></i>
-          <span class="menu-title">Dashboard</span>
-        </a>
-      </li>
+        <div class="profile-name">
+          <p class="name">
+            Welcome {{request.user.username}}
+          </p>
+         
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'dashboard' %}">
+        <i class="fa fa-home menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+ 
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'received' %}" aria-expanded="false" aria-controls="page-layouts">
+        <i class="fas fa-eye menu-icon"></i>
+        <span class="menu-title">View Received</span>
+        <i class="menu-arrow"></i>
+      </a>
       
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
-          <i class="fab fa-trello menu-icon"></i>
-          <span class="menu-title">Incoming </span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="page-layouts">
-          <ul class="nav flex-column sub-menu">
-            
-            <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="{% url 'addreceived' %}"><i class="fa fa-eye menu-icon"></i>Upload</a></li>
-            <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="{% url 'received' %}"> <i class="fab fa-telegram menu-icon"></i>View</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="nav-item d-none d-lg-block">
-        <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
-          <i class="fas fa-columns menu-icon"></i>
-          <span class="menu-title">Outgoing</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="sidebar-layouts">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="{% url 'sent' %}"><i class="fa fa-eye menu-icon"></i> View </a></li>
-            <li class="nav-item"> <a class="nav-link" href="{% url 'addsent' %}">Upload</a></li>
+    </li>
 
-          </ul>
-        </div>
-      </li>
-     
-     
-       
-  </nav>
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'addreceived' %}" aria-expanded="false" aria-controls="page-layouts">
+        <i class="fas fa-upload menu-icon"></i>
+        <span class="menu-title">Upload  Received</span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'sent' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-eye menu-icon"></i>
+        <span class="menu-title">View Sent </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
+   
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'addsent' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-upload menu-icon"></i>
+        <span class="menu-title">Upload Sent </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"  href="" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-user menu-icon"></i>
+        <span class="menu-title" "disabled" >User Management </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js' %}"></script>
+<script src="{% static 'js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'js/misc.js' %}"></script>
+<script src="{% static 'js/settings.js' %}"></script>
+<script src="{% static 'js/todolist.js' %}"></script>

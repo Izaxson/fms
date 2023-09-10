@@ -14,13 +14,11 @@ from core import settings
 from fms.forms import ReceivedForm, SentForm,UpdateReceivedForm,UpdateSentForm
 from fms.models import Received, Sent
 import mimetypes
-
-# Create your views here.
-
-from django.views.generic import TemplateView
-
 from django.views.generic import TemplateView
 from .models import Received, Sent  # Import the Received and Sent models
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 class LoginView(TemplateView):
@@ -32,7 +30,7 @@ class PasswordResetView(TemplateView):
 
 class DashboardView(TemplateView):
     template_name = 'fms/dashboard.html'
-
+    login_url = '/account/login/'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
@@ -104,7 +102,6 @@ class UpdateReceived(UpdateView):
 
 class DeleteReceived(DeleteView):
     model = Received
-    template_name = 'fms/incoming/delete.html'
     success_url = reverse_lazy('received')  # Redirect to the success URL after deletion
 
     def get_object(self, queryset=None):

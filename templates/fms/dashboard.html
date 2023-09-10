@@ -17,12 +17,12 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
+            <img src="{% static 'images/banner.png'%}" alt="banner" />
           </div>
         </div>
       </div>
       <div class="content-wrapper">
-        <div class="page-header">
+        <div class="page-header" align="center">
           <h3 class="page-title">
             Dashboard
           </h3>
@@ -35,7 +35,7 @@
                 <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                     <div class="statistics-item">
                       <p>
-                        <i class="icon-sm fa-folder-open mr-2"></i>
+                        <i class="icon-sm far fa-envelope mr-2"></i>
                         
                         Received
                       </p>
@@ -52,36 +52,14 @@
                     </div>
                     <div class="statistics-item">
                       <p>
-                        <i class="icon-sm fas fa-envelope mr-2"></i>
+                        <i class="fas fa-folder-open"></i>
                         Total Uploads
                       </p>
                       <h2>{{total_count}}</h2>
                       <label class="badge badge-outline-success badge-pill">All Files</label>
                     </div>
-                    {% comment %} <div class="statistics-item">
-                      <p>
-                        <i class="icon-sm fas fa-check-circle mr-2"></i>
-                        Update
-                      </p>
-                      <h2></h2>
-                      <label class="badge badge-outline-success badge-pill">57% increase</label>
-                    </div> {% endcomment %}
-                    {% comment %} <div class="statistics-item">
-                      <p>
-                        <i class="icon-sm fas fa-chart-line mr-2"></i>
-                        Sales
-                      </p>
-                      <h2>9000</h2>
-                      <label class="badge badge-outline-success badge-pill">10% increase</label>
-                    </div> {% endcomment %}
-                    {% comment %} <div class="statistics-item">
-                      <p>
-                        <i class="icon-sm fas fa-circle-notch mr-2"></i>
-                        Pending
-                      </p>
-                      <h2>7500</h2>
-                      <label class="badge badge-outline-danger badge-pill">16% decrease</label>
-                    </div> {% endcomment %}
+                   
+                     
                 </div>
               </div>
             </div>

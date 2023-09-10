@@ -79,12 +79,38 @@
           </div>
         </form>
         <br><br>
-        
-        <a href="{% url 'delete-received' file_id=received.id %}">
-            <button class="btn btn-danger float-right">Delete</button>
-        </a>
+        <div class="row">
+               
+                
+                
+          <div class="wrapper text-center">
+          
+            <p class="card-description">{{file_name}}</p>
+            <button class="btn btn-outline-danger" onclick="showSwal('warning-message-and-cancel')">Delete!</button>
+           
+          </div>
+        </div>
+    </div>
+      
       </div>
     </div>
   </div>
+  <script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
+  <script src="{% static 'vendors/js/vendor.bundle.addons.js'%}"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+ 
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/alerts.js'%}"></script>
+  <script src="{% static 'js/avgrund.js'%}"></script>
 
+
+ 
+  <script src="{% static 'js/dashboard.js'%}"></script>
+  <script src="{% static 'js/off-canvas.js'%}"></script>
+  <script src="{% static 'js/hoverable-collapse.js'%}"></script>
+  <script src="{% static 'js/misc.js'%}"></script>
+  <script src="{% static 'js/settings.js'%}"></script>
+  <script src="{% static 'js/todolist.js'%}"></script>
 {% endblock %}

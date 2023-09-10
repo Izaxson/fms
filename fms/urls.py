@@ -4,8 +4,8 @@ urlpatterns = [
 
    # path('view-pdf/<str:filename>/', views.PDFView.as_view(), name='pdf'),
     #received
-   path('',views.LoginView.as_view(),name='login'),
-   path('password-reset',views.PasswordResetView.as_view(),name='password-reset'),
+   
+
    path('home',views.DashboardView.as_view(),name='dashboard'),
 #    path('pdf',views.DisplayPdfView.as_view(),name='pdf'),
 
