@@ -73,7 +73,7 @@
                        
       
                         <td>
-                          <button class="btn btn-light"><a href=""><i class="fa fa-eye text-primary"></i>
+                          <a href="{% url 'view-file' sent.id %}">  <button class="btn btn-light"><i class="fa fa-eye text-primary"></i>
                           </button>
                         </td>
                           
@@ -86,8 +86,8 @@
                         </td>
 
                         <td>
-                          
-                          <a href="{% url 'delete-sent' sent.id %}"> <button class="btn btn-outline-light" onclick="showSwal('warning-message-and-cancel')"><i class="fa fa-trash text-danger"></button></a>
+                          <a href="{% url 'delete-sent' sent.id %}"> <button
+                              class="btn waves-effect waves-light btn-light"><i class="fas fa-trash"></button></a>
                         </td>
                       </tr>
       

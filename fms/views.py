@@ -11,14 +11,15 @@ from django.views.generic import CreateView,ListView,DetailView,FormView,UpdateV
 from django.contrib import messages
 from django.contrib.auth.models import User
 from core import settings
+from fms.filter import ReceivedFilter
 from fms.forms import ReceivedForm, SentForm,UpdateReceivedForm,UpdateSentForm
 from fms.models import Received, Sent
 import mimetypes
 from django.views.generic import TemplateView
 from .models import Received, Sent  # Import the Received and Sent models
-
+from django_filters.views import FilterView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.db.models import Q
 
 
 class LoginView(TemplateView):
@@ -50,10 +51,10 @@ class DashboardView(TemplateView):
             context['percent_sent'] = percent_sent
         except Exception as e:
             # Handle any exceptions gracefully
-            context['received_count'] = "no data."
-            context['sent_count'] = "no data."
-            context['total_count'] = "no data."
-            context['users_count'] = "no data."
+            context['received_count'] = "loading...."
+            context['sent_count'] = "loading...."
+            context['total_count'] = "loading...."
+            context['users_count'] = "loading...."
         
         return context
 
@@ -64,11 +65,26 @@ class ReceivedListView(ListView):
     template_name = 'fms/incoming/received.html'
     model = Received
     context_object_name = 'received'
+    filterset_class = ReceivedFilter
     # paginate_by = 35 # display  items per page
 
+    # def get_queryset(self):
+    #     # Return a queryset of all Expense objects of current logged in user
+    #      return Received.objects.all() 
+    
     def get_queryset(self):
-        # Return a queryset of all Expense objects of current logged in user
-         return Received.objects.all() 
+        queryset = super().get_queryset()
+        # queryset = queryset.filter(profile=self.request.user.profile)
+
+        search_query = self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name=search_query) ,
+                Q(Vehicle__icontains=search_query)
+            )
+
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs
     
 class ReceivedAddView(FormView):
     template_name = 'fms/incoming/addreceived.html'
@@ -109,10 +125,11 @@ class DeleteReceived(DeleteView):
         return get_object_or_404(Received, id=file_id)
 
 
-class SentListView(ListView):
+class SentListView(FilterView):
     template_name = 'fms/outgoing/sent.html'
     model = Sent
     context_object_name = 'sent'
+    filterset_class = ReceivedFilter
     # paginate_by = 10 # display 10 items per page
 
     def get_queryset(self):
@@ -201,9 +218,7 @@ def pdf_view(request, filename):
             return response
     except FileNotFoundError:
         return render(request, '404.html')  # Handle file not found gracefully
-from django.views.generic import ListView
-from .models import Received
-from .forms import ReceivedForm, UpdateReceivedForm, UpdateSentForm
+
 
 class SearchResultsView(ListView):
     model = Received
@@ -241,16 +256,64 @@ class SearchResultsView(ListView):
             
             return queryset
         return Received.objects.none()
-
-class SentFileView(View):
-    def get(self, request, sent_id):
+  
+class ReceivedViewFile(View):
+    def get(self, request, file_id):
         try:
-            uploaded_file = Sent.objects.get(pk=sent_id)
+            uploaded_file = Received.objects.get(pk=file_id)
+        except Received.DoesNotExist:
+            return HttpResponse("File not found", status=404)
+
+        # Determine the content type based on the file extension
+        file_name = uploaded_file.file.name
+        content_type = 'application/octet-stream'  # Default content type for unknown files
+
+        if file_name.endswith('.pdf'):
+            content_type = 'application/pdf'
+        # elif file_name.endswith('.jpg') or file_name.endswith('.jpeg'):
+        #     content_type = 'image/jpeg'
+        # elif file_name.endswith('.png'):
+        #     content_type = 'image/png'
+        # Add more content type checks for other file formats as needed
+
+        # Set the content type for displaying in the browser
+        response = HttpResponse(uploaded_file.file.read(), content_type=content_type)
+
+        # Remove the 'Content-Disposition' header to prevent a download prompt
+        del response['Content-Disposition']
+
+        return response    
+    
+
+class SentViewFile(View):
+    def get(self, request, file_id):
+        try:
+            uploaded_file = Sent.objects.get(pk=file_id)
         except Sent.DoesNotExist:
             return HttpResponse("File not found", status=404)
 
-        response = HttpResponse(
-            uploaded_file.sent.read(), content_type='application/force-download'
-        )
-        response['Content-Disposition'] = f'inline; filename="{uploaded_file.sent.name}"'
-        return response
+        # Determine the content type based on the file extension
+        file_name = uploaded_file.file.name
+        content_type = 'application/octet-stream'  # Default content type for unknown files
+
+        if file_name.endswith('.pdf'):
+            content_type = 'application/pdf'
+        # elif file_name.endswith('.jpg') or file_name.endswith('.jpeg'):
+        #     content_type = 'image/jpeg'
+        # elif file_name.endswith('.png'):
+        #     content_type = 'image/png'
+        # elif file_name.endswith('.ppt') or file_name.endswith('.pptx'):
+        #     content_type = 'application/vnd.ms-powerpoint'
+        # elif file_name.endswith('.xls') or file_name.endswith('.xlsx'):
+        #     content_type = 'application/vnd.ms-excel'
+        # elif file_name.endswith('.csv'):
+        #     content_type = 'text/csv'    
+        # Add more content type checks for other file formats as needed
+
+        # Set the content type for displaying in the browser
+        response = HttpResponse(uploaded_file.file.read(), content_type=content_type)
+
+        # Remove the 'Content-Disposition' header to prevent a download prompt
+        del response['Content-Disposition']
+
+        return response        

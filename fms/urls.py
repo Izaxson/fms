@@ -20,10 +20,10 @@ urlpatterns = [
    path('addsent',views.SentAddView.as_view(),name='addsent'),
    path('edit-sent/<int:file_id>',views.UpdateSent.as_view(),name='edit-sent'),
    path('delete-sent/<int:file_id>',views.DeleteSent.as_view(),name='delete-sent'),
-
+   path('view-file/<int:file_id>/', views.ReceivedViewFile.as_view(), name='view-file'),
 
    path('download/<int:file_id>/', views.SentDownloadFileView.as_view(), name='sent_download_file'),
    path('received-download/<int:file_id>/', views.ReceivedDownloadFileView.as_view(), name='received-download'),
-   path('view-file/<int:file_id>/', views.SentFileView.as_view(), name='view-file'),
-
+   path('view-file/<int:file_id>/', views.SentViewFile.as_view(), name='view-file'),
+  
 ]

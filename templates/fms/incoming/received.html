@@ -1,5 +1,6 @@
 {% extends 'fms/base2.html' %}
 {% load static%}
+{% load crispy_forms_tags %}
 {% block content %}
 <!-- Notification.css -->
 
@@ -35,9 +36,17 @@
   
       </div>
       {% endif %}
+
       <a class="nav-link" "float-right" href="{% url 'addreceived' %}">
         <span class="btn btn-success"> Upload New </span>
       </a>
+      {% comment %} <div class="card-body">
+        <h4>SEARCH/ FILTER  </h4>
+        <form method="GET">
+          {% comment %} {{ filter.form|crispy}}
+          <button type="submit" name='q' class="btn btn btn-success">Search </button>
+        </form>
+      </div> {% endcomment %}
       <div class="row">
         <div class="col-12">
 
