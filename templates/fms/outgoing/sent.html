@@ -1,201 +1,117 @@
 {% extends 'fms/base2.html' %}
 {% load static%}
+{% load crispy_forms_tags %}
 {% block content %}
+{% load widget_tweaks %}
+<!-- Notification.css -->
 
+<div class="content-wrapper">
+  <div class="page-header">
 
+  
+    {% comment %} <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Sample pages</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Orders</li>
+      </ol>
+    </nav> {% endcomment %}
+  </div>
+ 
 
-    <div class="page-header">
-     
-
-    
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12">
-                <div class="card">
-                  <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
-                </div>
-              </div>
-            </div>
-            <br><br>
-            {% comment %} <div class="row grid-margin">
-              <div class="col-12">
-                <div class="alert alert-warning" role="alert">
-                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-                </div>
-              </div>
-            </div> {% endcomment %}
-            {% if messages %}
-              <div class="alert alert-success" role="alert">
-
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                  {% endfor %}
-                
-              </div>
-              {% endif %}
-              <a class="nav-link" "float-right" href="{% url 'addsent' %}">
-              <span class="btn btn-success"> Upload New </span>
-            </a>
-            <div class="row">
-              <div class="col-12">
-                <div class="table-responsive">
-                  <table id="order-listing" class="table">
-                    <thead>
-                      <tr class="bg-success text-white">
-                        
-                        <th>#</th>
-                          <th>subject</th>
-                          <th>File Name</th>
-                          <th>Date Sent</th>
-                         
-                          <th>Edit</th>
-                         
-                         
-                          <th>View File</th>
-                          <th>Download</th>
-                          <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for sent in object_list%}
-                      <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{sent.subject}}</td>
-      
-                        <td>{{sent.file_name}}</td>
-                        <td>{{sent.date_sent|date:"d-m-Y"}}</td>
-                        
-                        <td>
-                          <a href="{% url 'edit-sent' sent.id %}"><button class="btn btn-light"><i class="fa fa-edit text-primary"></i>
-                          </button>
-                        </td>
-                       
-      
-                        <td>
-                          <a href="{% url 'view-file' sent.id %}">  <button class="btn btn-light"><i class="fa fa-eye text-primary"></i>
-                          </button>
-                        </td>
-                          
-      
-                        <td >
-                            
-                          <a href="{% url 'sent_download_file' sent.id %}"> <button
-                              class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
-      
-                        </td>
-
-                        <td>
-                          <a href="{% url 'delete-sent' sent.id %}"> <button
-                              class="btn waves-effect waves-light btn-light"><i class="fas fa-trash"></button></a>
-                        </td>
-                      </tr>
-      
-                      {% endfor%}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
           </div>
         </div>
-     
-   
+      </div>
+      <br><br>
+      {% if messages %}
+      <div class="alert alert-success" role="alert">
+  
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+  
+      </div>
+      {% endif %}
 
+    <button><a class="nav-link" "float-right" href="{% url 'addsent' %}">
+        <span class="btn btn-success"> Upload New </span>
+      </a></button>
+      {% comment %} <div class="card-body">
+        <h4>SEARCH/ FILTER  </h4>
+        <form method="GET"  class="forms-sample">
+           {{ filter.form|crispy}} 
+          {% comment %} {% render_field filter.form.subject type="text" class="form-control" placeholder="Subject"  %}
+          {{ filter.form.field_name.errors }}
+          {% render_field filter.form.file_name type="text" class="form-control" placeholder="Subject"  %}
+          {{ filter.form.field_name.errors }} 
 
-{% comment %} <div class="pcoded-inner-content">
-    <!-- Main-body start -->
-    <div class="main-body">
-        <div class="page-wrapper">
-            <!-- Page-body start -->
-            <div class="page-body">
-                <!-- Basic table card start -->
-                <div class="card">
-              
-                    <div class="card-header">
-                       
-                        <a href="{% url 'addsent' %}"> <button class="btn waves-effect waves-light btn-success"><i class="ti-plus"></i>Add New</button></a>
-                        <span></span>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="fa fa fa-wrench open-card-option"></i></li>
-                                <li><i class="fa fa-window-maximize full-card"></i></li>
-                                <li><i class="fa fa-minus minimize-card"></i></li>
-                                <li><i class="fa fa-refresh reload-card"></i></li>
-                                <li><i class="fa fa-trash close-card"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    {% if messages %}
-                    {% for message in messages %}
-                       
-                       
-                        <button class="btn btn-success waves-effect" data-type="inverse"
-                         data-animation-in="animated fadeInUp" data-animation-out="animated
-                          fadeOutUp">{{message}}</button>
-                        
-                    {% endfor %}
-            {% endif %}
-                    <div class="card-block table-border-style">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
+          
+          <button type="submit" name='q' class="btn btn btn-success">Search </button>
+        </form>
+      </div> {% endcomment %}
+      <div class="row">
+        <div class="col-12">
 
-                                    <tr>
-                                       
-                                        <th>No</th>
-                                        <th>subject </th>
-                                        <th>file_name</th>
-                                      
-                                        <th>Date Sent</th>
-                                        <th 'colspan=3'>Action</th>
-                                    </tr>
+          <div class="table-responsive">
+            <table id="order-listing" class="table">
+              <thead>
+                <tr class="bg-success text-white">
 
+                  <th>#</th>
+                  <th>subject</th>
+                  <th>File Name</th>
+                  <th>Date Sent</th>
+                  
+             
+                  <th>Edit</th>
+                  <th>View</th>
+                  <th>Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for sent in object_list%}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{sent.subject}}</td>
 
-                                </thead>
-                                <tbody>
-                                    {% for sent in object_list %}
-                                    <tr>
-                                        
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>
-                                        <td>{{sent.subject}}</td>
-                                        <td>{{sent.file_name}}</td>
-                                        <td>{{sent.date_sent}}</td>
-                                       
+                  <td>{{sent.file_name}}</td>
+                  <td>{{sent.date_sent|date:"d-m-Y"}}</td>
+                  
+               
+                  <td>
+                    <a href="{% url 'edit-sent' sent.id %}"><button class="btn btn-light"><i class="fa fa-edit text-primary"></i>
+                    </button>
+                  </td>
 
-                                        <td>
-                                            <button class="btn waves-effect waves-light btn-info"><i class="ti-eye"></i>{{received.file.url}}</button>
-                                            <a href="{% url 'download_file' sent.id %}"> <button class="btn waves-effect waves-light btn-success"><i class="ti-import"></i>Download</button></a>
-                                            <button class="btn waves-effect waves-light btn-danger"><i class="ti-trash"></i></i>Delete</button>
-                                        </td>
+                  <td>
+                    <a href="{% url 'file' sent.id %}">  <button class="btn btn-light"><i class="fa fa-eye text-primary"></i>
+                    </button>
+                  </td>
+                    
 
-                                    </tr>
-                                    {% empty%}
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                  <td class="text-right">
+                        <a href="{% url 'sent_download_file' sent.id %}"> <button
+                        class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
 
-            </div>
-            <!-- Page-body end -->
+                  </td>
+                </tr>
+
+                {% endfor%}
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     </div>
-    <!-- Main-body end -->
-
-    <div id="styleSelector">
-
-    </div>
-</div> {% endcomment %}
+  </div>
 
 
-
-
-
-<!-- Warning Section Starts -->
-<!-- Older IE warning message -->
+</div>
 
 <script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
 <script src="{% static 'vendors/js/vendor.bundle.addons.js'%}"></script>
@@ -211,19 +127,8 @@
 <script src="{% static 'js/data-table.js'%}"></script>
 
 
-  
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="{% static 'js/toastDemo.js'%}"></script>
-  <script src="{% static 'js/desktop-notification.js'%}"></script>
 
 
-  <!-- endinject -->
-  <!-- inject:js -->
 
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="{% static 'js/alerts.js'%}"></script>
-  <script src="{% static 'js/avgrund.js'%}"></script>
 
 {% endblock %}

@@ -22,7 +22,7 @@ class UpdateReceivedForm(forms.ModelForm):
         'entity': forms.TextInput(attrs={'class': 'form-control'}),
         'institution': forms.TextInput(attrs={'class': 'form-control'}),
         'priority': forms.TextInput(attrs={'class': 'form-control'}),
-        'date_received': forms.DateInput(attrs={'class': 'form-control'}),
+        'date_received': forms.DateInput(attrs={'class':'colsm=5' 'form-control'}),
         'office_to': forms.TextInput(attrs={'class': 'form-control'}),
         'county': forms.TextInput(attrs={'class': 'form-control'}),
         'file': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),  # ClearableFileInput for file fields

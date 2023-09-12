@@ -1,163 +1,135 @@
 {% extends 'fms/base2.html' %}
 {% load static%}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
 {% block content %}
+{% load widget_tweaks %}
 <!-- Notification.css -->
-<link rel="stylesheet" type="text/css" href="{% static 'assets/pages/notification/notification.css'%}">
 
+<div class="content-wrapper">
+  <div class="page-header">
 
+  
+    {% comment %} <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Sample pages</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Orders</li>
+      </ol>
+    </nav> {% endcomment %}
+  </div>
+ 
 
-<div class="pcoded-inner-content">
-    <!-- Main-body start -->
-    <div class="main-body">
-        <div class="page-wrapper">
-            <!-- Page-body start -->
-            <div class="page-body">
-                <!-- Basic table card start -->
-                <form method="POST">
-                  {% csrf_token %}
-                  
-                  {{ form.subject.label_tag }} {{ file.subject }}
-                  {{ form.entity.label_tag }} {{ form.entity }}
-                  {{ form.institution.label_tag }} {{ form.institution }}
-                  
-                  Date From: <input type="date" id="date_from" name="date_from">
-                  Date To: <input type="date" id="date_to" name="date_to">
-                  
-                  {{ form.priority.label_tag }} {{ form.priority }}
-                  
-                  <button type="submit">Search</button>
-              </form>
-                <div class="card">
-                    <div class="card-header">
-
-                        <a href="{% url 'addreceived' %}"> <button class="btn waves-effect waves-light btn-success"><i
-                                    class="ti-plus"></i>Add New</button></a>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="fa fa fa-wrench open-card-option"></i></li>
-                                <li><i class="fa fa-window-maximize full-card"></i></li>
-                                <li><i class="fa fa-minus minimize-card"></i></li>
-                                <li><i class="fa fa-refresh reload-card"></i></li>
-                                <li><i class="fa fa-trash close-card"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    {% if messages %}
-                    {% for message in messages %}
-
-
-                    <button class="btn btn-success waves-effect" data-type="inverse"
-                        data-animation-in="animated fadeInUp" data-animation-out="animated
-                              fadeOutUp">{{message}}</button>
-
-                    {% endfor %}
-                    {% endif %}
-                    <div class="card-block table-border-style">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-
-                                    <tr>
-                                        <th>#</th>
-                                        <th>subject </th>
-
-                                        <th>institution </th>
-                                        <th>Date Received</th>
-
-                                        <th 'colspan=3'>Action</th>
-                                    </tr>
-
-
-                                </thead>
-                                <tbody>
-                                    {% for received in object_list %}
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td>{{received.subject}}</td>
-                                        {% comment %} <td>{{received.file_name}}</td> {% endcomment %}
-                                        <td>{{received.institution|slice:"20"}}</td>
-                                        <td>{{received.date_received}}</td>
-
-                                        
-                                            <td>
-                                                <a href=""><button class="btn waves-effect waves-light btn-info"><i class="ti-eye"></i></button></a>
-                                                <a href="{% url 'download_file' received.id %}"> <button class="btn waves-effect waves-light btn-success"><i class="ti-import"></i>Download</button></a>
-                                                <button class="btn waves-effect waves-light btn-danger"><i class="ti-trash"></i></i>Delete</button>
-                                            </td>
-                                            
-
-                                    </tr>
-                                    {% empty%}
-                                    {% endfor %}
-
-                                </tbody>
-                            </table>
-                            {% if is_paginated %}
-  <ul class="pagination">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- Page-body end -->
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
+          </div>
         </div>
-    </div>
-    <!-- Main-body end -->
+      </div>
+      <br><br>
+      {% if messages %}
+      <div class="alert alert-success" role="alert">
+  
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+  
+      </div>
+      {% endif %}
+      <div class="card-body">
+        <h4>SEARCH/ FILTER  </h4>
+        <form method="GET"  class="forms-sample">
+           {{ filter.form|crispy}} 
+          {% comment %} {% render_field filter.form.subject type="text" class="form-control" placeholder="Subject"  %}
+          {{ filter.form.field_name.errors }}
+          {% render_field filter.form.file_name type="text" class="form-control" placeholder="Subject"  %}
+          {{ filter.form.field_name.errors }} {% endcomment %}
 
-    <div id="styleSelector">
+          
+          <button type="submit" name='q' class="btn btn btn-success">Search </button>
+        </form>
+      </div>
+      <button><a class="nav-link" "float-right" href="{% url 'addreceived' %}">
+        <span class="btn btn-success"> Upload New </span>
+      </a>
+    </button>
+      <div class="row">
+        <div class="col-12">
 
+          <div class="table-responsive">
+            <table id="order-listing" class="table">
+              <thead>
+                <tr class="bg-success text-white">
+
+                  <th>#</th>
+                  <th>subject</th>
+                  <th>institution</th>
+                  <th>Date Received</th>
+                  
+                  <th>Office To</th>
+                  <th>Edit/Delete</th>
+                  <th>View</th>
+                  <th>Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for received in object_list%}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{received.subject}}</td>
+
+                  <td>{{received.institution}}</td>
+                  <td>{{received.date_received|date:"d-m-Y"}}</td>
+                  
+                  <td>{{received.office_to}}</td>
+                  <td>
+                    <a href="{% url 'edit-received' received.id %}"><button class="btn btn-light"><i class="fa fa-edit text-primary"></i>
+                    </button>
+                  </td>
+
+                  <td>
+                    <a href="{% url 'view-file' received.id %}">  <button class="btn btn-light"><i class="fa fa-eye text-primary"></i>
+                    </button>
+                  </td>
+                    
+
+                  <td class="text-right">
+                        <a href="{% url 'received-download' received.id %}"> <button
+                        class="btn waves-effect waves-light btn-light"><i class="fas fa-download"></i></button></a>
+
+                  </td>
+                </tr>
+
+                {% endfor%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+
 </div>
 
+<script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
+<script src="{% static 'vendors/js/vendor.bundle.addons.js'%}"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js'%}"></script>
+<script src="{% static 'js/hoverable-collapse.js'%}"></script>
+<script src="{% static 'js/misc.js'%}"></script>
+<script src="{% static 'js/settings.js'%}"></script>
+<script src="{% static 'js/todolist.js'%}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{% static 'js/data-table.js'%}"></script>
 
 
 
 
-<!-- Warning Section Starts -->
-<!-- Older IE warning message -->
 
-<!-- Required Jquery -->
-<script type="text/javascript" src="{% static 'assets/js/jquery/jquery.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'assets/js/jquery-ui/jquery-ui.min.js'%} "></script>
-<script type="text/javascript" src="{% static 'assets/js/popper.js/popper.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'assets/js/bootstrap/js/bootstrap.min.js'%} "></script>
-<!-- jquery slimscroll js -->
-<script type="text/javascript" src="{% static 'assets/js/jquery-slimscroll/jquery.slimscroll.js'%} "></script>
-<!-- waves js -->
-<script src="{% static 'assets/pages/waves/js/waves.min.js'%}"></script>
-
-<!-- modernizr js -->
-<script type="text/javascript" src="{% static 'assets/js/SmoothScroll.js'%}"></script>
-<script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js'%} "></script>
-<!-- Custom js -->
-<script src="{% static 'assets/js/pcoded.min.js'%}"></script>
-<script src="{% static 'assets/js/vertical-layout.min.js'%} "></script>
-<script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'assets/js/script.js'%}"></script>
-
-<script type="text/javascript" src="{% static 'assets/js/bootstrap-growl.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'assets/pages/notification/notification.js'%}"></script>
-<script src="{% static 'assets/js/pcoded.min.js'%}"></script>
-<script src="{% static 'assets/js/vertical-layout.min.js'%} "></script>
-<script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js'%}"></script>
 
 {% endblock %}

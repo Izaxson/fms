@@ -11,9 +11,8 @@ from django.views.generic import CreateView,ListView,DetailView,FormView,UpdateV
 from django.contrib import messages
 from django.contrib.auth.models import User
 from core import settings
-from fms.filter import ReceivedFilter
+from fms.filter import ReceivedFilter, SentFilter
 from fms.forms import ReceivedForm, SentForm,UpdateReceivedForm,UpdateSentForm
-from fms.models import Received, Sent
 import mimetypes
 from django.views.generic import TemplateView
 from .models import Received, Sent  # Import the Received and Sent models
@@ -61,7 +60,7 @@ class DashboardView(TemplateView):
  
 
 
-class ReceivedListView(ListView):
+class ReceivedListView(FilterView):
     template_name = 'fms/incoming/received.html'
     model = Received
     context_object_name = 'received'
@@ -80,26 +79,69 @@ class ReceivedListView(ListView):
         if search_query:
             queryset = queryset.filter(
                 Q(name=search_query) ,
-                Q(Vehicle__icontains=search_query)
+                Q(subject__icontains=search_query)
             )
 
         self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
         return self.filterset.qs
+    #search Received
+
+class SearchReceivedListView(FilterView):
+    template_name = 'fms/incoming/search.html'
+    model = Received
+    context_object_name = 'search'
+    filterset_class = ReceivedFilter
+    # paginate_by = 35 # display  items per page
+
+    # def get_queryset(self):
+    #     # Return a queryset of all Expense objects of current logged in user
+    #      return Received.objects.all() 
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # queryset = queryset.filter(profile=self.request.user.profile)
+
+        search_query = self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name=search_query) ,
+                Q(subject__icontains=search_query)
+            )
+
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+        
+# class ReceivedAddView(FormView):
+#     template_name = 'fms/incoming/addreceived.html'
+#     form_class=ReceivedForm
+#     success_url = reverse_lazy('received')
+
+#     def form_valid(self, form):
+#         # profile = self.request.user.profile  #  'Profile' model related to the user
+#         # received = form.save(commit=False)
+#         # received.profile = profile
+#         form.save()
+#         #handling form error
+#     def form_invalid(self, form):
+#         messages.error(self.request, 'There was an error in your form. Please correct the errors below.')
+#         return self.render_to_response(self.get_context_data(form=form))
+#         messages.success(self.request, 'Your File has been saved. Thank you!')
+#         return super().form_valid(form)
     
 class ReceivedAddView(FormView):
     template_name = 'fms/incoming/addreceived.html'
-    form_class=ReceivedForm
-    success_url = reverse_lazy('received')
+    form_class = ReceivedForm
+    success_url = reverse_lazy('addreceived')
 
     def form_valid(self, form):
-        # profile = self.request.user.profile  #  'Profile' model related to the user
-        # received = form.save(commit=False)
-        # received.profile = profile
         form.save()
-
         messages.success(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)
-    
+
+    def form_invalid(self, form):
+        messages.warning(self.request, 'There was an error in your form. Please correct the errors below.')
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 class UpdateReceived(UpdateView):
     template_name = 'fms/incoming/editreceived.html'
@@ -125,16 +167,49 @@ class DeleteReceived(DeleteView):
         return get_object_or_404(Received, id=file_id)
 
 
+ 
 class SentListView(FilterView):
     template_name = 'fms/outgoing/sent.html'
     model = Sent
     context_object_name = 'sent'
-    filterset_class = ReceivedFilter
-    # paginate_by = 10 # display 10 items per page
-
+    filterset_class = SentFilter
+ 
+    
     def get_queryset(self):
-        # Return a queryset of all Expense objects of current logged in user
-         return Sent.objects.all()  
+        queryset = super().get_queryset()
+        # queryset = queryset.filter(profile=self.request.user.profile)
+
+        search_query = self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name=search_query) ,
+                Q(Vehicle__icontains=search_query)
+            )
+
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+class SearchSentListView(FilterView):
+    template_name = 'fms/outgoing/search.html'
+    model = Sent
+    context_object_name = 'search'
+    filterset_class = SentFilter
+  
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # queryset = queryset.filter(profile=self.request.user.profile)
+
+        search_query = self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name=search_query) ,
+                Q(subject__icontains=search_query)
+            )
+
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+
+
 
 
 class SentAddView(FormView):
@@ -176,12 +251,6 @@ class DeleteSent(DeleteView):
         file_id = self.kwargs.get('file_id')
         return get_object_or_404(Sent, id=file_id)
     
-
-
-
-
-
-
 class ReceivedDownloadFileView(View):
     def get(self, request, file_id):
         uploaded_file = Received.objects.get(pk=file_id)
@@ -206,23 +275,9 @@ class SentDownloadFileView(View):
         return response
 
 
-
-def pdf_view(request, filename):
-    # Build the full file path to the PDF document
-    filepath = os.path.join(settings.MEDIA_ROOT, "files", filename)
-
-    try:
-        with open(filepath, 'rb') as pdf:
-            response = HttpResponse(pdf.read(), content_type='application/pdf')
-            response['Content-Disposition'] = 'inline;filename=' + filename
-            return response
-    except FileNotFoundError:
-        return render(request, '404.html')  # Handle file not found gracefully
-
-
 class SearchResultsView(ListView):
     model = Received
-    template_name = 'search_results.html'  # Create this template
+    template_name = 'fms/incoming/search.html'  # Create this template
     context_object_name = 'results'
     paginate_by = 10  # Adjust as needed
     
@@ -270,13 +325,7 @@ class ReceivedViewFile(View):
 
         if file_name.endswith('.pdf'):
             content_type = 'application/pdf'
-        # elif file_name.endswith('.jpg') or file_name.endswith('.jpeg'):
-        #     content_type = 'image/jpeg'
-        # elif file_name.endswith('.png'):
-        #     content_type = 'image/png'
-        # Add more content type checks for other file formats as needed
-
-        # Set the content type for displaying in the browser
+  
         response = HttpResponse(uploaded_file.file.read(), content_type=content_type)
 
         # Remove the 'Content-Disposition' header to prevent a download prompt
@@ -290,7 +339,7 @@ class SentViewFile(View):
         try:
             uploaded_file = Sent.objects.get(pk=file_id)
         except Sent.DoesNotExist:
-            return HttpResponse("File not found", status=404)
+            return HttpResponse("File  not found", status=404)
 
         # Determine the content type based on the file extension
         file_name = uploaded_file.file.name
@@ -298,22 +347,10 @@ class SentViewFile(View):
 
         if file_name.endswith('.pdf'):
             content_type = 'application/pdf'
-        # elif file_name.endswith('.jpg') or file_name.endswith('.jpeg'):
-        #     content_type = 'image/jpeg'
-        # elif file_name.endswith('.png'):
-        #     content_type = 'image/png'
-        # elif file_name.endswith('.ppt') or file_name.endswith('.pptx'):
-        #     content_type = 'application/vnd.ms-powerpoint'
-        # elif file_name.endswith('.xls') or file_name.endswith('.xlsx'):
-        #     content_type = 'application/vnd.ms-excel'
-        # elif file_name.endswith('.csv'):
-        #     content_type = 'text/csv'    
-        # Add more content type checks for other file formats as needed
-
-        # Set the content type for displaying in the browser
+        
         response = HttpResponse(uploaded_file.file.read(), content_type=content_type)
 
         # Remove the 'Content-Disposition' header to prevent a download prompt
         del response['Content-Disposition']
 
-        return response        
+        return response         

@@ -29,7 +29,14 @@
       </a>
       
     </li>
-
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'search' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-search menu-icon"></i>
+        <span class="menu-title" "disabled" >Search Received </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
     <li class="nav-item">
       <a class="nav-link"  href="{% url 'addreceived' %}" aria-expanded="false" aria-controls="page-layouts">
         <i class="fas fa-upload menu-icon"></i>
@@ -57,13 +64,14 @@
       
     </li>
     <li class="nav-item">
-      <a class="nav-link"  href="" aria-expanded="false" aria-controls="general-pages">
-        <i class="fas fa-user menu-icon"></i>
-        <span class="menu-title" "disabled" >User Management </span>
+      <a class="nav-link"  href="{% url 'sentsearch' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-search menu-icon"></i>
+        <span class="menu-title" "disabled" >Search Sent </span>
         <i class="menu-arrow"></i>
       </a>
       
     </li>
+   
   </ul>
 </nav>
 
