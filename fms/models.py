@@ -48,7 +48,7 @@ class Received(models.Model):
     office_to = models.CharField(choices=OFFICE_TO, max_length=200)
     county = models.CharField(choices=County, max_length=100, blank=True, null=True)  # Adjust max_length if needed
     date_created = models.DateTimeField(auto_now_add=True)
-    file = models.FileField(upload_to='files/', validators=[FileExtensionValidator(['pdf'])])
+    file = models.FileField(upload_to='files/%Y/%m/%d/', validators=[FileExtensionValidator(['pdf'])])
     remarks = models.TextField(max_length=100, null=True, blank=True)
 
     class Meta:
@@ -86,7 +86,7 @@ class Sent(models.Model):
     office_from= models.CharField(choices=OFFICE_FROM, max_length=200)
     # date_created = models.DateTimeField(auto_now_add=True,blank=True,null=True)
     date_created = models.DateTimeField(auto_now_add=True)
-    file = models.FileField(upload_to='files/', validators=[FileExtensionValidator(['pdf'])])
+    file = models.FileField(upload_to='files/%Y/%m/%d/', validators=[FileExtensionValidator(['pdf'])])
     remarks = models.TextField(max_length=100,null=True,blank=True)
 
     class Meta:

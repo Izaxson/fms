@@ -1,6 +1,6 @@
 {% extends 'fms/base2.html' %}
 {% load static%}
-{% load crispy_forms_tags %}
+
 {% block content %}
 {% load widget_tweaks %}
 <!-- Notification.css -->
@@ -41,6 +41,8 @@
     <button><a class="nav-link" "float-right" href="{% url 'addsent' %}">
         <span class="btn btn-success"> Upload New </span>
       </a></button>
+
+      <br><br>
       {% comment %} <div class="card-body">
         <h4>SEARCH/ FILTER  </h4>
         <form method="GET"  class="forms-sample">

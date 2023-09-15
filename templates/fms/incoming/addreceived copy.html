@@ -1,0 +1,94 @@
+{% extends 'fms/base2.html' %}
+{% load static%}
+{% load widget_tweaks %}
+{% block content %}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <img src="{% static 'images/mdrbanner.png'%}" alt="banner" />
+            </div>
+          </div>
+        </div>
+        <p class="card-description">
+          {% if messages %}
+        <div class="alert alert-success" role="alert">
+
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+   
+          </div>
+          {% endif %}
+        </p>
+        <form method="POST" enctype="multipart/form-data" class="forms-sample">
+          {% csrf_token %}
+          <div class="form-group">
+           
+            {% render_field form.subject type="text" class="form-control" placeholder="Subject"  %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3">File Name</label>
+            
+            {% render_field form.file_name type="text" class="form-control"  placeholder="File name" %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3">Entity</label>
+            
+            {% render_field form.entity type="text" class="form-control"   placeholder="" %}
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail3">Institution</label>
+            
+            {% render_field form.institution type="text" class="form-control"   placeholder="" %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3">Priority</label>
+            
+            {% render_field form.priority type="date" class="form-control"   placeholder="Date Sent" %}
+          </div>
+          <div class="form-group" >
+            <label for="exampleInputEmail3">Date Received</label>
+            
+            {% render_field form.date_received type="date"  class="form-control"   placeholder="Date" %}
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3">Office To</label>
+            
+            {% render_field form.office_to type="text" class="form-control"   placeholder="" %}
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail3">County </label>
+            
+            {% render_field form.county type="text" class="form-control"   placeholder="If applicable" %}
+          </div>
+         
+          <div class="form-group">
+            <label>File upload</label>
+            <input type="file" name="file" class="file-upload-default">
+            <div class="input-group col-xs-12">
+              {% render_field form.file type="file" class="form-control"  %}
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-success" disabled type="button">Upload</button>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleTextarea1">Remarks</label>
+            {% render_field form.remarks type="textarea" class="form-control"   placeholder="Remarks" %}
+          </div>
+          {% comment %} <button btn-btn primary type=submit>Upload</button> {% endcomment %}
+          
+          <button btn btn-success type="submit"class="btn btn-success d-none d-lg-flex">Submit</button> 
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

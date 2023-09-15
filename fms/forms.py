@@ -1,6 +1,7 @@
 from fms.models import Received,Sent
 from .import forms
 from django.forms import ModelForm
+from django.contrib.admin.widgets import  AdminDateWidget, AdminTimeWidget, AdminSplitDateTime
 
 from django import forms
     
@@ -70,6 +71,7 @@ class UpdateSentForm(forms.ModelForm):
     date_sent = forms.DateField(
         label='Date Sent',
         widget=forms.DateInput(attrs={'class': 'form-control'}),
+        
         required=True,
     )
 

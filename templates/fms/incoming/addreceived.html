@@ -17,7 +17,7 @@
         <div class="alert alert-success" role="alert">
 
           {% for message in messages %}
-          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          <li{% if message.danger %} class="{{ message.danger }}" {% endif %}>{{ message }}</li>
             {% endfor %}
    
           </div>
@@ -84,11 +84,12 @@
           </div>
           {% comment %} <button btn-btn primary type=submit>Upload</button> {% endcomment %}
           
-          <button btn btn-success type="submit"class="btn btn-success d-none d-lg-flex">Submit</button> 
+          <button btn btn-success type="submit"class="btn btn-success ">Submit</button> 
           
         </form>
       </div>
-    </div>
+    
   </div>
-
+  
+</div>
 {% endblock %}

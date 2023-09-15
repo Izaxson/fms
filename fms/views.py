@@ -21,10 +21,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 
-class LoginView(TemplateView):
-    template_name = 'fms/auth/login.html'
-class PasswordResetView(TemplateView):
-    template_name = 'fms/auth/password-reset.html'
+
 
 
 
@@ -223,7 +220,7 @@ class SentAddView(FormView):
         # form.profile = profile
         # form.save()
 
-        messages.success(self.request, 'Your File has been saved. Thank you!')
+        messages.warning(self.request, 'Your File has been saved. Thank you!')
         return super().form_valid(form)   
     
 
@@ -275,10 +272,11 @@ class SentDownloadFileView(View):
         return response
 
 
-class SearchResultsView(ListView):
+class SearchResultsView(FilterView):
     model = Received
     template_name = 'fms/incoming/search.html'  # Create this template
-    context_object_name = 'results'
+    filterset_class = ReceivedFilter
+    context_object_name = 'search'
     paginate_by = 10  # Adjust as needed
     
     def get_queryset(self):
